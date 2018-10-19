@@ -1,7 +1,13 @@
-1) Download image raspbian
-2) Install on SD-card with etcher from PC
+1) Download image raspbian-9
+2) Install raspbian-9 on SD-card with etcher from PC
 3) After installing it, remove and insert SD in PC
 4) On \boot create file with name ssh
-5) insert SD card in raspberry. 
-6) raspberry should now boot with ssh enabled
+5) Insert SD card in raspberry. 
+6) Raspberry should now boot with ssh enabled
+
+7) Connect to raspberry through ssh
+
+8) from commandline 
+wget https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/install_configs
+sh install_configs
  
