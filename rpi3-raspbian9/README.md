@@ -8,6 +8,5 @@
 7) Connect to raspberry through ssh
 
 8) from commandline 
-wget https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/install_configs
-sh install_configs
- 
+wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/deployment_base -O ./deployment_base
+sh ./deployment_base
