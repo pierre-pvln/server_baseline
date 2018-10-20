@@ -10,5 +10,5 @@
 8. From commandline of raspberry pi
 ``` 
 wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/deployment_base -O ./deployment_base
-sh ./deployment_base
+bash ./deployment_base
 ```

@@ -4,23 +4,41 @@
 # Author: pierre@pvln.nl
 # Usage : sh ./deployment_base 
 #
+echo 0.0 Starting deployment_base ...
 
-echo 0. Starting deployment_base ...
+# ==========================================
+# SET VARIABLES
+# =========================================
+MYDEPLOYMENTUSERNAME="myDep"
+MYDEPLOYMENTPASSWORD="myDep"
 
-echo 1. Timezone ...
+# ==========================================
+# DEPLOYMENT USER AND GROUP
+# ==========================================
+echo 1.0 Deployment user
+echo 1.1 Checking if deployment user $MYDEPLOYMENTUSERNAME exists if not create it ...
+[[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
+echo 1.2 Checking if homedirectory of user $MYDEPLOYMENTUSERNAME exists if not create it ...
+# Inspiration: https://unix.stackexchange.com/questions/247576/how-to-get-home-given-user
+[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
+
+
+echo 2.0 Timezone ...
 # ==========================================
 # CONFIGURE TIMEZONE AND LOCALTIME
 # ==========================================
 #
 # Inspiration: https://www.tecmint.com/set-time-timezone-and-synchronize-time-using-timedatectl-command/
 #              https://stackoverflow.com/questions/12375722/how-do-i-test-in-one-line-if-command-output-contains-a-certain-string/12375792
+#              https://stackoverflow.com/questions/12230690/string-comparison-in-bash-not-found/12230723
 #
-echo 1.1 Check if timezone is Europe/Amsterdam if not change it
+echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
+echo 3. Required Programs
 # ==========================================
-# DEPLOYMENT USER
+# PROGRAMS
 # ==========================================
-echo 2. Deployment user
-echo 2.1 Checking if deployment user exists ...
-echo 2.2 Creating deployment user ...
+#
+
+echo 4. Deployment base created ...
