@@ -1,2 +1,26 @@
 #! bin/bash
-ls -l
+# This script provides a generic deployment configuration base to initialize a server so it con be configured with puppet
+#
+# Author: pierre@pvln.nl
+# Usage : sh ./deployment_base 
+#
+
+echo 0. Starting deployment_base ...
+
+echo 1. Timezone ...
+# ==========================================
+# CONFIGURE TIMEZONE AND LOCALTIME
+# ==========================================
+#
+# Inspiration: https://www.tecmint.com/set-time-timezone-and-synchronize-time-using-timedatectl-command/
+#              https://stackoverflow.com/questions/12375722/how-do-i-test-in-one-line-if-command-output-contains-a-certain-string/12375792
+#
+echo 1.1 Check if timezone is Europe/Amsterdam if not change it
+[[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
+
+# ==========================================
+# DEPLOYMENT USER
+# ==========================================
+echo 2. Deployment user
+echo 2.1 Checking if deployment user exists ...
+echo 2.2 Creating deployment user ...
