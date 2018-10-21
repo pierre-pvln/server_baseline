@@ -31,9 +31,9 @@ echo 1.2 Checking if directory $MYDEPLOYMENTDIRECTORY exists if not create it ..
 #[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] || sudo mkdir /home/$MYDEPLOYMENTUSERNAME && sudo usermod -d /home/$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTUSERNAME
 if [ ! -d "$MYDEPLOYMENTDIRECTORY" ]; then
   sudo mkdir "$MYDEPLOYMENTDIRECTORY"
-  sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 fi
-
+echo 1.3 Setting ownership of dirctory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
+sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
 echo 1.5 Adding user to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
@@ -51,7 +51,7 @@ echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
 
-echo 3. Required Programs
+echo 3.0 Required Programs
 # ==========================================
 # PROGRAMS
 # ==========================================
@@ -60,4 +60,4 @@ cd /home/$MYDEPLOYMENTUSERNAME
 ls -l
 
 
-echo 4. Deployment base created ...
+echo 4.0 Deployment base created ...
