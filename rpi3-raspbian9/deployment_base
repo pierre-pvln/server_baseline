@@ -63,26 +63,35 @@ echo 4.0 Required Programs
 # PROGRAMS
 # ==========================================
 #
+
+echo 5.0 Required configuration files
+# ==========================================
+# CONFIGURATION FILES
+# ==========================================
+#
 cd /home/$MYDEPLOYMENTUSERNAME
+mkdir -p puppet/manifests
+mkdir -p puppet/modules
+# get host manifest file
+sudo wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp -O puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp
+# get modules files as part of the entire project from github
+curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/master/
+#extract only the contents of the modules folder
 
-
-
-echo 5.0 Finalize..
+echo 6.0 Finalize..
 # ==========================================
 # FINALIZE
 # ==========================================
 #
-echo 5.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
+echo 6.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
 sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
-
-echo 5.2 Adding user to sudo group
+echo 6.2 Adding user to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
 
-
-echo 6.0 Deployment base created ...
+echo 7.0 Deployment base created ...
 # ==========================================
 # DONE
 # ==========================================
 #
-echo 6.1 You should now logout and login with $MYDEPLOYMENTUSERNAME
+echo 7.1 You should now logout and login with $MYDEPLOYMENTUSERNAME
