@@ -88,8 +88,8 @@ echo 6.0 Finalize..
 # FINALIZE
 # ==========================================
 #
-echo 6.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
-sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
+echo 6.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY and all files in it to $MYDEPLOYMENTUSERNAME ...
+sudo chown -R $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
 echo 6.2 Adding user to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
