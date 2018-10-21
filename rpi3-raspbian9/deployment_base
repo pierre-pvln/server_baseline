@@ -9,8 +9,12 @@ echo 0.0 Starting deployment_base ...
 # ==========================================
 # SET VARIABLES
 # =========================================
+#
+# no spaces in variables!
+#
 MYDEPLOYMENTUSERNAME="myDep"
 MYDEPLOYMENTPASSWORD="myDep"
+MYDEPLOYMENTDIRECTORY=/home/$MYDEPLOYMENTUSERNAME
 
 echo 1.0 Deployment user ...
 # ==========================================
@@ -18,12 +22,19 @@ echo 1.0 Deployment user ...
 # ==========================================
 echo 1.1 Checking if deployment user $MYDEPLOYMENTUSERNAME exists if not create it ...
 [[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
-echo 1.2 Checking if homedirectory of user $MYDEPLOYMENTUSERNAME exists if not create it ...
+
+echo 1.2 Checking if directory $MYDEPLOYMENTDIRECTORY exists if not create it ...
 #
 # Inspiration: https://unix.stackexchange.com/questions/247576/how-to-get-home-given-user
 #              https://stackoverflow.com/questions/42979293/creating-a-home-directory-for-a-user
 #
-[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] || mkdir /home/$MYDEPLOYMENTUSERNAME && usermod -d /home/$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTUSERNAME
+#[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] || sudo mkdir /home/$MYDEPLOYMENTUSERNAME && sudo usermod -d /home/$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTUSERNAME
+if [ ! -d "$MYDEPLOYMENTDIRECTORY" ]; then
+  sudo mkdir "$MYDEPLOYMENTDIRECTORY"
+  sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
+fi
+
+
 echo 1.5 Adding user to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
 
