@@ -71,6 +71,11 @@ echo 4.0 Required Programs
 # PROGRAMS
 # ==========================================
 #
+# Inspiration: http://www.digitalinfo.nl/puppet/puppet-node-installatie-rpi/
+#              https://raspberrypi.stackexchange.com/questions/33480/cannot-install-puppet-4-on-raspbian-jessie
+#
+echo 4.1 installing puppet
+sudo apt-get install puppet -y
 
 echo 5.0 Required configuration files
 # ==========================================
