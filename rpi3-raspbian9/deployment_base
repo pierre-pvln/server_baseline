@@ -22,7 +22,12 @@ echo 1.0 Deployment user ...
 # DEPLOYMENT USER AND GROUP
 # ==========================================
 echo 1.1 Checking if deployment user $MYDEPLOYMENTUSERNAME exists if not create it ...
-[[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
+[[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME
+#set password for user
+#
+# Inspiration: https://ccm.net/faq/790-changing-password-via-a-script
+#
+echo -e "$MYDEPLOYMENTPASSWORD\n$MYDEPLOYMENTPASSWORD" | (sudo passwd $MYDEPLOYMENTUSERNAME)
 
 echo 1.2 Checking if directory $MYDEPLOYMENTDIRECTORY exists if not create it ...
 #
@@ -70,12 +75,12 @@ echo 5.0 Required configuration files
 # ==========================================
 #
 cd /home/$MYDEPLOYMENTUSERNAME
-mkdir -p puppet/manifests
-mkdir -p puppet/modules
+sudo mkdir -p puppet/manifests
+sudo mkdir -p puppet/modules
 # get host manifest file
 sudo wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp -O puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp
 # get modules files as part of the entire project from github
-curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/master/
+sudo curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/master/
 #extract only the contents of the modules folder
 
 echo 6.0 Finalize..
