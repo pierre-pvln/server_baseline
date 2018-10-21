@@ -2,7 +2,7 @@
 # This script provides a generic deployment configuration base to initialize a server so it con be configured with puppet
 #
 # Author: pierre@pvln.nl
-# Usage : sh ./deployment_base 
+# Usage : bash ./deployment_base 
 #
 echo 0.0 Starting deployment_base ...
 
@@ -15,6 +15,7 @@ echo 0.0 Starting deployment_base ...
 MYDEPLOYMENTUSERNAME="myDep"
 MYDEPLOYMENTPASSWORD="myDep"
 MYDEPLOYMENTDIRECTORY=/home/$MYDEPLOYMENTUSERNAME
+MYDEPLOYMENTHOSTNAME="voluntas-v0.0.1"
 
 echo 1.0 Deployment user ...
 # ==========================================
@@ -32,7 +33,8 @@ echo 1.2 Checking if directory $MYDEPLOYMENTDIRECTORY exists if not create it ..
 if [ ! -d "$MYDEPLOYMENTDIRECTORY" ]; then
   sudo mkdir "$MYDEPLOYMENTDIRECTORY"
 fi
-echo 1.3 Setting ownership of dirctory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
+
+echo 1.3 Setting ownership of directory $MYDEPLOYMENTDIRECTORY to $MYDEPLOYMENTUSERNAME ...
 sudo chown $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
 echo 1.5 Adding user to sudo group
@@ -50,14 +52,25 @@ echo 2.0 Timezone ...
 echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
+echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
+# ==========================================
+# SET HOSTNAME
+# ==========================================
+#
+# Hostname should be the same as manifestfilename for puppet
+#
+sudo hostname $MYDEPLOYMENTHOSTNAME
+echo $MYDEPLOYMENTUSERNAME >hostname
+sudo cp hostname /etc
+# when server is rebooted it will have the new hostname
 
-echo 3.0 Required Programs
+echo 4.0 Required Programs
 # ==========================================
 # PROGRAMS
 # ==========================================
 #
 cd /home/$MYDEPLOYMENTUSERNAME
-ls -l
 
 
-echo 4.0 Deployment base created ...
+
+echo 5.0 Deployment base created ...
