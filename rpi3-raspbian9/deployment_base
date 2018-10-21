@@ -12,16 +12,20 @@ echo 0.0 Starting deployment_base ...
 MYDEPLOYMENTUSERNAME="myDep"
 MYDEPLOYMENTPASSWORD="myDep"
 
+echo 1.0 Deployment user ...
 # ==========================================
 # DEPLOYMENT USER AND GROUP
 # ==========================================
-echo 1.0 Deployment user
 echo 1.1 Checking if deployment user $MYDEPLOYMENTUSERNAME exists if not create it ...
 [[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
 echo 1.2 Checking if homedirectory of user $MYDEPLOYMENTUSERNAME exists if not create it ...
+#
 # Inspiration: https://unix.stackexchange.com/questions/247576/how-to-get-home-given-user
-[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME -p $MYDEPLOYMENTPASSWORD
-
+#              https://stackoverflow.com/questions/42979293/creating-a-home-directory-for-a-user
+#
+[[ $(getent passwd $MYDEPLOYMENTUSERNAME | cut -d: -f6) == "" ]] || mkdir /home/$MYDEPLOYMENTUSERNAME && usermod -d /home/$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTUSERNAME
+echo 1.5 Adding user to sudo group
+sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
 
 echo 2.0 Timezone ...
 # ==========================================
@@ -35,10 +39,14 @@ echo 2.0 Timezone ...
 echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
+
 echo 3. Required Programs
 # ==========================================
 # PROGRAMS
 # ==========================================
 #
+cd /home/$MYDEPLOYMENTUSERNAME
+ls -l
+
 
 echo 4. Deployment base created ...
