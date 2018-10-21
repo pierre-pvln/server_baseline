@@ -12,6 +12,9 @@ echo 0.0 Starting deployment_base ...
 #
 # no spaces in variables!
 #
+# TODO: - check if variables are set as environment or at commandline
+#       - commandline superseeds environment settings superseeds default settings in this file
+#
 MYDEPLOYMENTUSERNAME="myDep"
 MYDEPLOYMENTPASSWORD="myDep"
 MYDEPLOYMENTDIRECTORY=/home/$MYDEPLOYMENTUSERNAME
