@@ -66,7 +66,7 @@ echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 #sudo cp hostname /etc
 ## when server is rebooted it will have the new hostname
 
-echo 4.0 Required Programs
+echo 4.0 Required Programs ...
 # ==========================================
 # PROGRAMS
 # ==========================================
@@ -74,11 +74,11 @@ echo 4.0 Required Programs
 # Inspiration: http://www.digitalinfo.nl/puppet/puppet-node-installatie-rpi/
 #              https://raspberrypi.stackexchange.com/questions/33480/cannot-install-puppet-4-on-raspbian-jessie
 #
-echo 4.1 installing puppet
+echo 4.1 installing puppet ...
 sudo apt-get install puppet -y
 
 
-echo 5.0 Required configuration files
+echo 5.0 Required configuration files ...
 # ==========================================
 # PUPPET CONFIGURATION FILES
 # ==========================================
