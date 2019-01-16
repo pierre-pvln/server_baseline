@@ -1,0 +1,15 @@
+#! bin/bash
+# This script runs puppet to configure the node
+#
+# Author: pierre@pvln.nl
+# Usage : bash ./run_puppet 
+#
+echo 0.0 Starting puppet ...
+puppet --version
+if [ $? -eq 0 ]; then
+    echo OK
+else
+    echo FAIL
+fi
+
+echo 7.0 Puppet run ...
