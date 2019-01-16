@@ -1,5 +1,5 @@
 #! bin/bash
-# This script provides a generic deployment configuration base to initialize a server so it con be configured with puppet
+# This script provides a generic deployment configuration base to initialize a server so it can be configured with puppet
 #
 # Author: pierre@pvln.nl
 # Usage : bash ./deployment_base 
