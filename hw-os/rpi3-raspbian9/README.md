@@ -10,9 +10,9 @@
 8. From commandline of raspberry pi
 ``` 
 cd ~
-wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/node/deployment_base -O ./deployment_base
-wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/node/run_puppet -O ./run_puppet
-wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/node/run_wget -O ./run_wget
+wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/deployment_base -O ./deployment_base
+wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_puppet -O ./run_puppet
+wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_wget -O ./run_wget
 bash ./deployment_base
 
 ```
