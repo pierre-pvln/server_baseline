@@ -9,6 +9,7 @@
 7. Connect to raspberry through ssh
 8. From commandline of raspberry pi
 ``` 
-wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/deployment_base -O ./deployment_base
+cd ~
+wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/rpi3-raspbian9/node/deployment_base -O ./deployment_base
 bash ./deployment_base
 ```
