@@ -18,7 +18,7 @@ echo 0.0 Starting deployment_base ...
 MYDEPLOYMENTUSERNAME="myDep"
 MYDEPLOYMENTPASSWORD="myDep"
 MYDEPLOYMENTDIRECTORY=/home/$MYDEPLOYMENTUSERNAME
-MYDEPLOYMENTHOSTNAME="voluntas-v0.0.1"
+MYDEPLOYMENTHOSTNAME="voluntas-v001"
 
 echo 1.0 Deployment user ...
 # ==========================================

@@ -7,9 +7,9 @@
 echo 0.0 Starting puppet ...
 puppet --version
 if [ $? -eq 0 ]; then
-    echo OK
+    puppet apply --modulepath=/home/myDep/puppet/modules /home/myDep/puppet/manifests/site.pp
 else
-    echo FAIL
+    echo Puppet not installed
 fi
 
-echo 7.0 Puppet run ...
+echo 7.0 Puppet run done ...
