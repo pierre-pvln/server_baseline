@@ -10,7 +10,7 @@ echo 0.0 Starting deployment_base ...
 # SET VARIABLES
 # =========================================
 #
-# no spaces in variables!
+# no spaces or . in variables!
 #
 # TODO: - check if variables are set as environment or at commandline
 #       - commandline overrides environment settings overrides default settings in this file
@@ -74,9 +74,14 @@ echo 4.0 Required Programs ...
 # Inspiration: http://www.digitalinfo.nl/puppet/puppet-node-installatie-rpi/
 #              https://raspberrypi.stackexchange.com/questions/33480/cannot-install-puppet-4-on-raspbian-jessie
 #
-echo 4.1 installing puppet ...
-sudo apt-get install puppet -y
-
+echo 4.1 Check if puppet is installed if not install it ...
+puppet --version
+if [ $? -eq 0 ]; then
+    echo [OK] Puppet already installed ...
+else
+    sudo apt-get install puppet -y 
+    echo [OK] Puppet installed ...
+fi
 
 echo 5.0 Required configuration files ...
 # ==========================================
