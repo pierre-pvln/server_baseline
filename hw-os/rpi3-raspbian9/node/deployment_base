@@ -54,14 +54,14 @@ echo 2.0 Timezone ...
 echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
-#echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
+echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
 ## ==========================================
 ## SET HOSTNAME
 ## ==========================================
 ##
-## Hostname should be the same as manifestfilename for puppet
+## Hostname should be the same as manifest file for puppet (sites.pp)
 ##
-#sudo hostname $MYDEPLOYMENTHOSTNAME
+sudo hostname $MYDEPLOYMENTHOSTNAME
 #echo $MYDEPLOYMENTUSERNAME >hostname
 #sudo cp hostname /etc
 ## when server is rebooted it will have the new hostname
