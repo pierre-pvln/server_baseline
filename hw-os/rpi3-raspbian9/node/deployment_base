@@ -26,7 +26,7 @@ echo 1.0 Deployment user ...
 # ==========================================
 echo 1.1 Checking if deployment user $MYDEPLOYMENTUSERNAME exists if not create it ...
 [[ $(cat /etc/passwd | grep $MYDEPLOYMENTUSERNAME | sed -e 's/:.*//g') =~ $MYDEPLOYMENTUSERNAME ]] ||  sudo useradd -m $MYDEPLOYMENTUSERNAME
-#set password for user
+#(re)set password for user
 #
 # Inspiration: https://ccm.net/faq/790-changing-password-via-a-script
 #
@@ -105,14 +105,19 @@ mkdir -p /tmp/unziped
 unzip master.zip -d /tmp/unziped
 ls -l /tmp/unziped/
 
-echo 5.4 Checking if directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests exists if not create it ...
+echo 5.4 Copy relevant files
+GIT_SHORT=$(git ls-remote http://github.com/pierre-pvln/servers_baseline.git master | cut -c1-7) && echo $GIT_SHORT
+cp /tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules/* /home/$MYDEPLOYMENTUSERNAME/puppet/modules
+
+
+echo 5.5 Checking if directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests exists if not create it ...
 if [ ! -d "/home/$MYDEPLOYMENTUSERNAME/puppet/manifests" ]; then
   sudo mkdir -p "/home/$MYDEPLOYMENTUSERNAME/puppet/manifests"
   echo Directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests created ...
 fi
 #sudo mkdir -p /home/$MYDEPLOYMENTUSERNAME/puppet/manifests
 
-echo 5.5 Retrieve puppet manifest file from github ...
+echo 5.6 Retrieve puppet manifest file from github ...
 sudo wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp -O /home/$MYDEPLOYMENTUSERNAME/puppet/manifests/site.pp
 
 
