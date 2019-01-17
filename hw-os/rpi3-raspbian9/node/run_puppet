@@ -5,7 +5,7 @@
 # Usage : bash ./run_puppet 
 #
 echo 0.0 Starting puppet ...
-puppet --version
+puppet --version >/dev/null
 if [ $? -eq 0 ]; then
     puppet apply --modulepath=/home/myDep/puppet/modules /home/myDep/puppet/manifests/site.pp
 else

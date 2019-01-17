@@ -55,13 +55,15 @@ echo 2.1 Check if timezone is Europe/Amsterdam if not change it ...
 [[ $(timedatectl | grep "Time zone") =~ "Europe/Amsterdam" ]] || sudo timedatectl set-timezone "Europe/Amsterdam"
 
 echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
-## ==========================================
-## SET HOSTNAME
-## ==========================================
-##
-## Hostname should be the same as manifest file for puppet (sites.pp)
-##
+# ==========================================
+# SET HOSTNAME
+# ==========================================
+#
+# Hostname should be the same as manifest file for puppet (sites.pp)
+#
 sudo hostname $MYDEPLOYMENTHOSTNAME
+# after reboot hostname is reset to raspberrypi
+
 #echo $MYDEPLOYMENTUSERNAME >hostname
 #sudo cp hostname /etc
 ## when server is rebooted it will have the new hostname
@@ -75,7 +77,7 @@ echo 4.0 Required Programs ...
 #              https://raspberrypi.stackexchange.com/questions/33480/cannot-install-puppet-4-on-raspbian-jessie
 #
 echo 4.1 Check if puppet is installed if not install it ...
-puppet --version 
+puppet --version >/dev/null
 if [ $? -eq 0 ]; then
     echo Puppet already installed ...
 else
