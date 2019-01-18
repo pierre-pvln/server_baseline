@@ -102,13 +102,22 @@ curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/mas
 
 echo 5.3 Extract modules files ...
 mkdir -p /tmp/unziped
-unzip master.zip -d /tmp/unziped
+unzip -o master.zip -d /tmp/unziped
 ls -l /tmp/unziped/
 
 echo 5.4 Copy relevant files
+#get the git short hash for the latest files in the master branch
+#
+#Inspiration: https://stackoverflow.com/questions/24750215/getting-the-last-commit-hash-from-a-remote-repo-without-cloning
+#             https://unix.stackexchange.com/questions/272260/how-to-get-first-5-chars-of-a-git-commit-hash-id-and-store-it-in-a-variable-in-b  
+#
 GIT_SHORT=$(git ls-remote http://github.com/pierre-pvln/servers_baseline.git master | cut -c1-7) && echo $GIT_SHORT
-cp /tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules/* /home/$MYDEPLOYMENTUSERNAME/puppet/modules
 
+# check if folder exists then copy
+if [ -d "/tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules" ]; then
+  sudo cp /tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules/* /home/$MYDEPLOYMENTUSERNAME/puppet/modules
+  echo Files copied to /home/$MYDEPLOYMENTUSERNAME/puppet/modules ...
+fi
 
 echo 5.5 Checking if directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests exists if not create it ...
 if [ ! -d "/home/$MYDEPLOYMENTUSERNAME/puppet/manifests" ]; then
@@ -129,10 +138,10 @@ echo 6.0 Finalize..
 echo 6.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY and all files in it to $MYDEPLOYMENTUSERNAME ...
 sudo chown -R $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
-echo 6.2 Adding user to sudo group
+echo 6.2 Adding $MYDEPLOYMENTUSERNAME to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
 
-echo 6.3 Setting shell to bash
+echo 6.3 Setting shell to bash for $MYDEPLOYMENTUSERNAME
 sudo chsh -s /bin/bash $MYDEPLOYMENTUSERNAME
 
 echo 7.0 Deployment base created ...
