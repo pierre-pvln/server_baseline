@@ -101,9 +101,9 @@ echo 5.2 Retrieve puppet modules files from github ...
 curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/master/
 
 echo 5.3 Extract modules files ...
-mkdir -p /tmp/unziped
-unzip -o master.zip -d /tmp/unziped
-ls -l /tmp/unziped/
+mkdir -p /tmp/unzipped
+unzip -o master.zip -d /tmp/unzipped
+ls -l /tmp/unzipped/
 
 echo 5.4 Copy relevant files
 #get the git short hash for the latest files in the master branch
