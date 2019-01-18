@@ -61,12 +61,13 @@ echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
 #
 # Hostname should be the same as manifest file for puppet (sites.pp)
 #
-sudo hostname $MYDEPLOYMENTHOSTNAME
+# sudo hostname $MYDEPLOYMENTHOSTNAME
 # after reboot hostname is reset to raspberrypi
-
-#echo $MYDEPLOYMENTUSERNAME >hostname
+#
+#echo $MYDEPLOYMENTHOSTNAME >hostname
 #sudo cp hostname /etc
-## when server is rebooted it will have the new hostname
+# when server is rebooted it will have the new hostname
+sudo hostnamectl set-hostname $MYDEPLOYMENTHOSTNAME
 
 echo 4.0 Required Programs ...
 # ==========================================
