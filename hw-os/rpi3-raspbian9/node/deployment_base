@@ -62,8 +62,12 @@ echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
 # Hostname should be the same as manifest file for puppet (sites.pp)
 #
 CURRENTHOSTNAME=$(hostname)
-# change hostname
+# change hostname for now. After reboot hostname is back to old host name. 
 sudo hostname $MYDEPLOYMENTHOSTNAME
+
+#change if for ever
+sudo echo $MYDEPLOYMENTHOSTNAME >/etc/hostname
+echo /etc/hostname
 
 #change settings in hosts file if needed
 if grep -q $MYDEPLOYMENTHOSTNAME /etc/hosts 
@@ -72,6 +76,7 @@ then
   grep $MYDEPLOYMENTHOSTNAME /etc/hosts
 else
 #replace current hostname with new one; this prevents "sudo unable to resolve host" error message
+  echo Changing hostname settings in /etc/hosts 
   sudo sed -i "s/$CURRENTHOSTNAME/$MYDEPLOYMENTHOSTNAME/g" /etc/hosts
 fi
 
