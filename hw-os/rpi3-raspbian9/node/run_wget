@@ -14,3 +14,6 @@ wget -q --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_ba
 
 #echo Retrieving run_wget
 wget -q --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_wget -O ./run_wget
+
+#echo Retrieving run_wget
+wget -q --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/reset_hostname -O ./run_wget

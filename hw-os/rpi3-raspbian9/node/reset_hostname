@@ -1,0 +1,62 @@
+#! bin/bash
+# This script resets the hostname to raspberrypi
+#
+# Author: pierre@pvln.nl
+# Usage : bash ./reset_hostname 
+#
+echo 0.0 Starting reset ...
+
+# ==========================================
+# SET VARIABLES
+# =========================================
+#
+# no spaces or . in variables!
+#
+# TODO: - check if variables are set as environment or at commandline
+#       - commandline overrides environment settings overrides default settings in this file
+#
+MYDEPLOYMENTHOSTNAME="raspberrypi"
+
+echo 3.0 Setting hostname to $MYDEPLOYMENTHOSTNAME ...
+# ==========================================
+# SET HOSTNAME
+# ==========================================
+#
+# Hostname should be the same as manifest file for puppet (sites.pp)
+#
+CURRENTHOSTNAME=$(hostname)
+# change hostname for now. After reboot hostname is back to old host name. 
+sudo hostname $MYDEPLOYMENTHOSTNAME
+
+#change if for ever
+#change settings in hostname file if needed
+if grep -q $MYDEPLOYMENTHOSTNAME /etc/hostname 
+then
+# $MYDEPLOYMENTHOSTNAME found in file /etc/hosts, show info
+#  grep $MYDEPLOYMENTHOSTNAME /etc/hostname
+  echo $MYDEPLOYMENTHOSTNAME already in /etc/hostname  
+  cat /etc/hostname
+else
+#replace current hostname with new one; this prevents "sudo unable to resolve host" error message
+  echo Changing hostname settings in /etc/hostname 
+  sudo sed -i "s/$CURRENTHOSTNAME/$MYDEPLOYMENTHOSTNAME/g" /etc/hostname
+  cat /etc/hostname
+fi
+
+#change settings in hosts file if needed
+if grep -q $MYDEPLOYMENTHOSTNAME /etc/hosts 
+then
+# $MYDEPLOYMENTHOSTNAME found in file /etc/hosts, show info
+  grep $MYDEPLOYMENTHOSTNAME /etc/hosts
+else
+#replace current hostname with new one; this prevents "sudo unable to resolve host" error message
+  echo Changing hostname settings in /etc/hosts 
+  sudo sed -i "s/$CURRENTHOSTNAME/$MYDEPLOYMENTHOSTNAME/g" /etc/hosts
+fi
+
+echo 8.0 Reset done ...
+# ==========================================
+# DONE
+# ==========================================
+#
+echo 8.1 You should now reboot the node ...
