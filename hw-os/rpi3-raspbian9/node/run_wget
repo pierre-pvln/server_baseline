@@ -7,10 +7,10 @@
 
 cd ~
 echo Retrieving deployment_base
-wget https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/deployment_base -O ./deployment_base
+wget --no-verbose --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/deployment_base -O ./deployment_base
 
 echo Retrieving run_puppet
-wget https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_puppet -O ./run_puppet
+wget --no-verbose --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_puppet -O ./run_puppet
 
 echo Retrieving run_wget
-wget https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_wget -O ./run_wget
+wget --no-verbose --show-progress https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/hw-os/rpi3-raspbian9/node/run_wget -O ./run_wget
