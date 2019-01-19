@@ -21,3 +21,4 @@ bash ./deployment_base
 
 ```
 10. Raspberry Pi should is now setup to be configured by puppet
+11. You should now login with deployment username and password
