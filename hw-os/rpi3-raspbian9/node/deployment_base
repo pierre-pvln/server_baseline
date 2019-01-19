@@ -72,12 +72,12 @@ then
 # $MYDEPLOYMENTHOSTNAME found in file /etc/hosts, show info
 #  grep $MYDEPLOYMENTHOSTNAME /etc/hostname
   echo $MYDEPLOYMENTHOSTNAME already in /etc/hostname  
-  cat hostname
+  cat /etc/hostname
 else
 #replace current hostname with new one; this prevents "sudo unable to resolve host" error message
   echo Changing hostname settings in /etc/hostname 
   sudo sed -i "s/$CURRENTHOSTNAME/$MYDEPLOYMENTHOSTNAME/g" /etc/hostname
-  cat hostname
+  cat /etc/hostname
 fi
 
 #change settings in hosts file if needed
@@ -170,7 +170,7 @@ echo 6.0 Script files ...
 # ==========================================
 #
 echo 6.1 copy run_puppet ...
-sudo cp run_puppet /home/$MYDEPLOYMENTDIRECTORY
+sudo cp run_puppet $MYDEPLOYMENTDIRECTORY
 
 echo 7.0 Finalize ...
 # ==========================================
