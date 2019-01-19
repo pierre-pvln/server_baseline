@@ -66,8 +66,19 @@ CURRENTHOSTNAME=$(hostname)
 sudo hostname $MYDEPLOYMENTHOSTNAME
 
 #change if for ever
-sudo echo $MYDEPLOYMENTHOSTNAME >/etc/hostname
-echo /etc/hostname
+#change settings in hostname file if needed
+if grep -q $MYDEPLOYMENTHOSTNAME /etc/hostname 
+then
+# $MYDEPLOYMENTHOSTNAME found in file /etc/hosts, show info
+#  grep $MYDEPLOYMENTHOSTNAME /etc/hostname
+  echo $MYDEPLOYMENTHOSTNAME already in /etc/hostname  
+  cat hostname
+else
+#replace current hostname with new one; this prevents "sudo unable to resolve host" error message
+  echo Changing hostname settings in /etc/hostname 
+  sudo sed -i "s/$CURRENTHOSTNAME/$MYDEPLOYMENTHOSTNAME/g" /etc/hostname
+  cat hostname
+fi
 
 #change settings in hosts file if needed
 if grep -q $MYDEPLOYMENTHOSTNAME /etc/hosts 
