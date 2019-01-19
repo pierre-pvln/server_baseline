@@ -153,24 +153,31 @@ fi
 echo 5.6 Retrieve puppet manifest file from github ...
 sudo wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp -O /home/$MYDEPLOYMENTUSERNAME/puppet/manifests/site.pp
 
+echo 6.0 Script files ...
+# ==========================================
+# SCRIPT FILES
+# ==========================================
+#
+echo 6.1 copy run_puppet ...
+sudo cp run_puppet /home/$MYDEPLOYMENTDIRECTORY
 
-echo 6.0 Finalize..
+echo 7.0 Finalize ...
 # ==========================================
 # FINALIZE
 # ==========================================
 #
-echo 6.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY and all files in it to $MYDEPLOYMENTUSERNAME ...
+echo 7.1 Setting ownership of directory $MYDEPLOYMENTDIRECTORY and all files in it to $MYDEPLOYMENTUSERNAME ...
 sudo chown -R $MYDEPLOYMENTUSERNAME:$MYDEPLOYMENTUSERNAME $MYDEPLOYMENTDIRECTORY
 
-echo 6.2 Adding $MYDEPLOYMENTUSERNAME to sudo group
+echo 7.2 Adding $MYDEPLOYMENTUSERNAME to sudo group
 sudo usermod -aG sudo $MYDEPLOYMENTUSERNAME
 
-echo 6.3 Setting shell to bash for $MYDEPLOYMENTUSERNAME
+echo 7.3 Setting shell to bash for $MYDEPLOYMENTUSERNAME
 sudo chsh -s /bin/bash $MYDEPLOYMENTUSERNAME
 
-echo 7.0 Deployment base created ...
+echo 8.0 Deployment base created ...
 # ==========================================
 # DONE
 # ==========================================
 #
-echo 7.1 You should now logout and login with $MYDEPLOYMENTUSERNAME
+echo 8.1 You should now logout and login with $MYDEPLOYMENTUSERNAME
