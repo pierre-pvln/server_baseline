@@ -1,0 +1,74 @@
+#! bin/bash
+# This script provides a generic deployment configuration base to initialize a server so it can be configured with puppet
+#
+# Author: pierre@pvln.nl
+# Usage : bash ./get_configs_from_github 
+#
+echo 0.0 Getting puppet configs from github ...
+
+# ==========================================
+# SET VARIABLES
+# =========================================
+#
+# no spaces or . in variables!
+#
+# TODO: - check if variables are set as environment or at commandline
+#       - commandline overrides environment settings overrides default settings in this file
+#
+MYDEPLOYMENTUSERNAME="myDep"
+MYDEPLOYMENTPASSWORD="myDep"
+MYDEPLOYMENTDIRECTORY=/home/$MYDEPLOYMENTUSERNAME
+MYDEPLOYMENTHOSTNAME="voluntas-v001"
+
+echo 5.0 Required configuration files ...
+# ==========================================
+# PUPPET CONFIGURATION FILES
+# ==========================================
+#
+echo 5.1 Checking if directory /home/$MYDEPLOYMENTUSERNAME/puppet/modules exists if not create it ...
+if [ ! -d "/home/$MYDEPLOYMENTUSERNAME/puppet/modules" ]; then
+  sudo mkdir -p "/home/$MYDEPLOYMENTUSERNAME/puppet/modules"
+  echo Directory /home/$MYDEPLOYMENTUSERNAME/puppet/modules created ...
+fi
+#sudo mkdir -p /home/$MYDEPLOYMENTUSERNAME/puppet/modules
+
+echo 5.2 Retrieve puppet modules files from github ...
+curl -L -o master.zip http://github.com/pierre-pvln/servers_baseline/zipball/master/
+
+echo 5.3 Extract modules files ...
+mkdir -p /tmp/unzipped
+unzip -o master.zip -d /tmp/unzipped
+ls -l /tmp/unzipped/
+
+echo 5.4 Copy relevant files
+#get the git short hash for the latest files in the master branch
+#
+#Inspiration: https://stackoverflow.com/questions/24750215/getting-the-last-commit-hash-from-a-remote-repo-without-cloning
+#             https://unix.stackexchange.com/questions/272260/how-to-get-first-5-chars-of-a-git-commit-hash-id-and-store-it-in-a-variable-in-b  
+#
+GIT_SHORT=$(git ls-remote http://github.com/pierre-pvln/servers_baseline.git master | cut -c1-7) && echo $GIT_SHORT
+
+# check if folder exists then copy
+if [ -d "/tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules" ]; then
+  sudo cp /tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules/* /home/$MYDEPLOYMENTUSERNAME/puppet/modules
+  echo Files copied to /home/$MYDEPLOYMENTUSERNAME/puppet/modules ...
+else
+  echo Folder /tmp/unzipped/pierre-pvln-servers_baseline-$GIT_SHORT/puppet/modules does not exist ...
+fi
+
+echo 5.5 Checking if directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests exists if not create it ...
+if [ ! -d "/home/$MYDEPLOYMENTUSERNAME/puppet/manifests" ]; then
+  sudo mkdir -p "/home/$MYDEPLOYMENTUSERNAME/puppet/manifests"
+  echo Directory /home/$MYDEPLOYMENTUSERNAME/puppet/manifests created ...
+fi
+#sudo mkdir -p /home/$MYDEPLOYMENTUSERNAME/puppet/manifests
+
+echo 5.6 Retrieve puppet manifest file from github ...
+sudo wget -q https://raw.githubusercontent.com/pierre-pvln/servers_baseline/master/puppet/manifests/$MYDEPLOYMENTHOSTNAME.pp -O /home/$MYDEPLOYMENTUSERNAME/puppet/manifests/site.pp
+
+echo 8.0 Updated puppet configuration files installed ...
+# ==========================================
+# DONE
+# ==========================================
+#
+echo 8.1 You can now run_puppet
