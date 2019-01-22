@@ -9,8 +9,8 @@ node voluntas-v001 {
   notice( '=== voluntas-v001 ==================' )
   notice( "Operating system: ${::operatingsystem}" )
   notice( "        Hostname: ${::hostname}" )
+  notice( "        FQDN    : ${::fqdn}" )
   notice( '======================================' )
-
 }
 
 
@@ -19,6 +19,7 @@ node default {
   notice( '=== default         ==================' )
   notice( "Operating system: ${::operatingsystem}" )
   notice( "        Hostname: ${::hostname}" )
+  notice( "        FQDN    : ${::fqdn}" )
   notice( '======================================' )
   notice( '= DOING NOTHING ' )
   notice( '======================================' )
